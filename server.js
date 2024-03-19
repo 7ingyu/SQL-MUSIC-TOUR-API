@@ -1,5 +1,6 @@
 // DEPENDENCIES
 const express = require('express')
+const { Sequelize } = require('sequelize');
 const app = express()
 
 // CONFIGURATION / MIDDLEWARE
@@ -14,7 +15,20 @@ app.get('/', (req, res) => {
     })
 })
 
+// DATABASE
+const { sequelize } = require('./models')
+// const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`)
+const testSequelize = async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Database connection has been established successfully.');
+    } catch (error) {
+    console.error('Unable to connect to the database:', error);
+    }
+}
+
 // LISTEN
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, async () => {
+    await testSequelize()
     console.log(`🎸 Rockin' on port: ${process.env.PORT}`)
 })
