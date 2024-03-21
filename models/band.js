@@ -9,13 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({ MeetGreet, MusicSet }) {
+      Band.hasMany(MeetGreet, {
+        foreignKey: "band_id",
+        as: "meet_greets",
+      })
+      Band.hasMany(MusicSet, {
+        foreignKey: "band_id",
+        as: "sets",
+      })
     }
   }
   Band.init({
-    name: DataTypes.STRING,
-    totalMembers: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    // totalMembers: DataTypes.INTEGER,
     genre: DataTypes.STRING
   }, {
     sequelize,
