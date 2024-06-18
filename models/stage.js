@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         through: StageEvent
       })
       Stage.hasMany(MusicSet, {
+        foreignKey: "stage_id",
         as: "sets"
       })
     }

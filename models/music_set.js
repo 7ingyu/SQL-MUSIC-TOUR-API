@@ -12,12 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Band, Stage, Event}) {
       // define association here
       MusicSet.belongsTo(Band, {
+        foreignKey: "band_id",
         as: "band"
       })
       MusicSet.belongsTo(Stage, {
+        foreignKey: "stage_id",
         as: "stage"
       })
       MusicSet.belongsTo(Event, {
+        foreignKey: "event_id",
         as: "event"
       })
     }

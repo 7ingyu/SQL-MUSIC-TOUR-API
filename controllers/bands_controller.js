@@ -1,5 +1,5 @@
 const bands = require('express').Router()
-const { Band } = require('../models')
+const { Band, MeetGreet, Event, MusicSet } = require('../models')
 
 bands.get('/', async (req, res) => {
   try {
@@ -13,7 +13,25 @@ bands.get('/', async (req, res) => {
 bands.get('/:id', async (req, res) => {
   try {
     const specificBand = await Band.findOne({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
+      include: [
+        {
+          model: MeetGreet,
+          as: 'meetGreets',
+          include: [{
+            model: Event,
+            as: 'event'
+          }]
+        },
+        {
+          model: MusicSet,
+          as: 'sets',
+          include: [{
+            model: Event,
+            as: 'event'
+          }]
+        }
+      ]
     })
     res.json(specificBand)
   } catch (e) {
